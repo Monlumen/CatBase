@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Cat Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        ul {
+            list-style-type: none;
+        }
+        li {
+            float: left;
+            display: block;
+            padding: 0.5vw;
+            border: 0.5vw dashed rgb(245, 245, 220);
+            border-radius: 1.2vw;
+            margin: 0.5vw;
+        }
+        li img {
+            max-width: 35vw;
+            max-height: 35vw;
+            border-radius: 1.2vw;
+        }
+        body {
+            background-color: lightpink;
+        }
+        #display-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            border-radius: 4vw;
+            padding: 2vw;
+            border: 2vw dashed rgb(245, 245, 220);
+            background-color: rgba(245, 245, 220, 0.2);
+            visibility: hidden;
+        }
+        #display {
+            border-radius: 3vw;
+            max-width: 80vw;
+            max-height: 80vw;
+        }
+        h1 {
+            font-family: "Pacifico", cursive;
+            color: #F08080;
+            margin-left: 5vw;
+            font-size: 300%;
+            text-shadow: 
+                -2px  0   0 #FFFFFF,
+                2px  0   0 #FFFFFF,
+                0   -2px 0 #FFFFFF,
+                0    2px 0 #FFFFFF,
+                4px   4px  8px rgba(0,0,0,0.2);
+        }
+        #h1-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        #h1-hidden{
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+
+<body>
+<h1 id="h1-fixed"> Yumi Gallery ~ </h1>
+<h1 id="h1-hidden"> Yumi Gallery ~ </h1>
+<ul id="ul-image-root">
+</ul>
+<div id="display-container">
+  <img id="display" src="images/catimage0.jpeg"/>
+</div>
+
+<script>
+    var displayContainer = document.getElementById("display-container");
+    var display = document.getElementById("display");
+    var root = document.getElementById("ul-image-root");
+    var lenImages = 24;
+    
+    const handleClickEvent = ev => {
+        display.setAttribute("src", ev.target.src);
+        displayContainer.style.visibility = "visible";
+        ev.stopPropagation();
+    }
+
+    for(let i = 0; i < lenImages; i++) {
+        const path = "images/catimage" + i + ".jpeg";
+        const img = new Image();
+        img.setAttribute("src", path);
+        img.setAttribute("draggable", "false");
+        img.addEventListener("click", handleClickEvent)
+        const li = document.createElement("li");
+        li.appendChild(img)
+        root.appendChild(li);
+    }
+    document.addEventListener("click", (ev) => {
+        displayContainer.style.visibility = "hidden";
+    })
+</script>
+
+</body>
